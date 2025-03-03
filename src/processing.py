@@ -1,6 +1,6 @@
 from datetime import datetime
 
-
+#
 def filter_by_state(banking_transaction: list[dict], state: str = "EXECUTED") -> list[dict]:
     """Функция возврата банковских операций по ключу"""
     state_banking_transaction = []
