@@ -1,6 +1,6 @@
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 import pytest
-from typing import Any, List, Generator
+from typing import Any, List, Dict
 
 
 transactions = [
@@ -51,27 +51,38 @@ transactions = [
     },
 ]
 
-# Фикстуры для тестов
 
-
+# Фикстура, которая предоставляет тестовые данные
 @pytest.fixture
-def sample_transactions():
+def transactions() -> List[Dict[str, Dict[str, Any]]]:
     return [
-        {"operationAmout": {"amount": 100, "currency": {"code": "USD"}}},
-        {"operationAmout": {"amount": 200, "currency": {"code": "EUR"}}},
+        {"operationAmount": {"amount": 100, "currency": {"code": "USD"}}},
+        {"operationAmount": {"amount": 200, "currency": {"code": "EUR"}}},
+        {"operationAmount": {"amount": 150, "currency": {"code": "USD"}}},
+        {"operationAmount": {"amount": 300, "currency": {"code": "JPY"}}},
     ]
 
 
-@pytest.fixture
-def card_number_range():
-    return (4000000000000000, 4000000000000003)
-
-
-# Тест для функции test_filter_by_currency
-def test_filter_by_currency(sample_transactions):
-    # Получаем первый элемент с валютой USD
-    result = next(filter_by_currency(sample_transactions, "USD"), None)
-    expected = {"operationAmout": {"amount": 100, "currency": {"code": "USD"}}}
+# Параметризованный тест
+@pytest.mark.parametrize(
+    "currency_code, expected",
+    [
+        (
+            "USD",
+            [
+                {"operationAmount": {"amount": 100, "currency": {"code": "USD"}}},
+                {"operationAmount": {"amount": 150, "currency": {"code": "USD"}}},
+            ],
+        ),
+        ("EUR", [{"operationAmount": {"amount": 200, "currency": {"code": "EUR"}}}]),
+        ("JPY", [{"operationAmount": {"amount": 300, "currency": {"code": "JPY"}}}]),
+        ("GBP", []),  # Тест на случай, когда нет транзакций с данной валютой
+    ],
+)
+def test_filter_by_currency(
+    transactions: List[Dict[str, Dict[str, Any]]], currency_code: str, expected: List[Dict[str, Dict[str, Any]]]
+) -> None:
+    result = list(filter_by_currency(transactions, currency_code))
     assert result == expected
 
 

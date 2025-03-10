@@ -1,10 +1,10 @@
-from typing import Any, Generator
+from typing import Any, Generator, List, Dict, Iterator
 
 
-def filter_by_currency(transaktions: Any, code: str) -> list:
+def filter_by_currency(transaktions: List[Dict[str, Any]], code: str) -> Iterator[Dict[str, Any]]:
     """Генераторная функция, которая возвращает транзакции с заданной валютой."""
     for transaktion in transaktions:
-        if transaktion["operationAmout"]["currency"]["code"] == code:
+        if transaktion["operationAmount"]["currency"]["code"] == code:
             yield transaktion
 
 
