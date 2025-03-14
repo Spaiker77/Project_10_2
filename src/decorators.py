@@ -30,7 +30,7 @@ def log(filename=None):
 
 def write_log(message, filename):
     if filename:
-        with open(filename, 'a') as log_file:
+        with open(filename, "a") as log_file:
             log_file.write(message + "\n")
     else:
         print(message)
@@ -40,6 +40,3 @@ def write_log(message, filename):
 @log(filename="mylog.txt")
 def my_function(x, y):
     return x + y
-
-
-
