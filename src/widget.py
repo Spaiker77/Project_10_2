@@ -1,25 +1,21 @@
 import datetime
 from typing import Union
 
-from src.masks import get_mask_account, get_mask_card_number
 
+def mask_account_card(account_info: str) -> str:
+    parts = account_info.split()
+    card_type = parts[0]
+    number = parts[1]
 
-def mask_account_card(type_and_number: Union[str]) -> Union[str]:
-    """функция, которая умеет обрабатывать информацию как о картах, так и о счетах."""
+    # Определяем длину номера и маскируем его
+    if len(number) == 16:  # Для карт
+        masked_number = f"{number[:4]} **** **** {number[-4:]}"
+    elif len(number) >= 12:  # Для аккаунтов (может быть больше 12 цифр)
+        masked_number = "*" * (len(number) - 4) + number[-4:]
+    else:  # Если номер короткий, просто маскируем его
+        masked_number = "*" * len(number)
 
-    text_result = ""
-    digit_result = ""
-    digit_count = 0
-    for el in type_and_number:
-        if el.isalpha():
-            text_result += el
-        elif el.isdigit():
-            digit_result += el
-            digit_count += 1
-    if digit_count > 16:
-        return f"{text_result} {get_mask_account(digit_result)}"
-    else:
-        return f"{text_result} {get_mask_card_number(digit_result)}"
+    return f"{card_type} {masked_number}"
 
 
 def get_date(user_date: Union[str]) -> Union[str]:
