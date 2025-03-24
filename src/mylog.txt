@@ -1,0 +1,18 @@
+tarting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
+Starting my_function with args: (1, 2), kwargs: {}
+my_function ok
